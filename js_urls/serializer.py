@@ -13,9 +13,9 @@ import re
 from urllib.parse import urljoin
 
 from django.urls import get_resolver
-from django.urls.resolvers import RegexURLPattern, RegexURLResolver
 
 from .conf import settings
+from .utils.compat import RegexPattern, RoutePattern, URLPattern, URLResolver
 from .utils.text import replace
 
 
@@ -44,8 +44,8 @@ def _parse_resolver(resolver, current_namespace=None, url_prefix=None, include_a
 
     urls = []
     for url_pattern in resolver.url_patterns:
-        if isinstance(url_pattern, RegexURLResolver):
-            new_url_prefix = _prepare_url_part(url_pattern.regex.pattern)
+        if isinstance(url_pattern, URLResolver):
+            new_url_prefix = _prepare_url_part(url_pattern)
             new_url_prefix = (
                 '/' + new_url_prefix if url_prefix is None else
                 urljoin(url_prefix or '/', new_url_prefix)
@@ -56,16 +56,25 @@ def _parse_resolver(resolver, current_namespace=None, url_prefix=None, include_a
                 url_prefix=new_url_prefix,
                 include_all=include_all,
             )
-        elif isinstance(url_pattern, RegexURLPattern) and url_pattern.name:
+        elif isinstance(url_pattern, URLPattern) and url_pattern.name:
             url_name = '{}:{}'.format(ns, url_pattern.name) if ns else url_pattern.name
             if url_name in settings.URLS or include_all:
-                full_url = _prepare_url_part(url_pattern.regex.pattern)
+                full_url = _prepare_url_part(url_pattern)
                 urls.append((url_name, urljoin(url_prefix or '/', full_url)))
 
     return urls
 
 
-def _prepare_url_part(url):
+def _prepare_url_part(url_pattern):
+    url = ''
+
+    if hasattr(url_pattern, 'regex'):  # NOTE: Django < 2.0
+        url = url_pattern.regex.pattern
+    elif isinstance(url_pattern.pattern, RegexPattern):
+        url = url_pattern.pattern._regex
+    elif isinstance(url_pattern.pattern, RoutePattern):
+        url = url_pattern.pattern._route
+
     full_url = replace(url, [('^', ''), ('$', '')])
 
     # Identifies named URL arguments inside the URL pattern.

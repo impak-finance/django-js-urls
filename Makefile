@@ -45,7 +45,7 @@ tests:
 
 # Collects code coverage data.
 coverage:
-	pipenv run py.test --cov-report term-missing --cov oidc_rp
+	pipenv run py.test --cov-report term-missing --cov js_urls
 
 # Run the tests in "spec" mode.
 spec:
