@@ -19,8 +19,11 @@ from .utils.compat import RegexPattern, RoutePattern, URLPattern, URLResolver
 from .utils.text import replace
 
 
-url_kwarg_re = re.compile(r'(\(\?P\<(.*?)\>.*?\))')
 url_arg_re = re.compile(r'(\(.*?\))')
+url_kwarg_re = re.compile(r'(\(\?P\<(.*?)\>.*?\))')
+url_optional_char_re = re.compile(r'(?:\w|/)(?:\?|\*)')
+url_optional_group_re = re.compile(r'\(\?\:.*\)(?:\?|\*)')
+url_path_re = re.compile(r'<(.*?)>')
 
 
 def get_urls_as_json(resolver=None):
@@ -68,24 +71,47 @@ def _parse_resolver(resolver, current_namespace=None, url_prefix=None, include_a
 def _prepare_url_part(url_pattern):
     url = ''
 
-    if hasattr(url_pattern, 'regex'):  # NOTE: Django < 2.0
+    if hasattr(url_pattern, 'regex'):  # pragma: no cover, NOTE: Django < 2.0 compatibility
         url = url_pattern.regex.pattern
     elif isinstance(url_pattern.pattern, RegexPattern):
         url = url_pattern.pattern._regex
     elif isinstance(url_pattern.pattern, RoutePattern):
         url = url_pattern.pattern._route
 
-    full_url = replace(url, [('^', ''), ('$', '')])
+    final_url = replace(url, [('^', ''), ('$', '')])
+
+    # Removes optional groups from the URL pattern.
+    optional_group_matches = url_optional_group_re.findall(final_url)
+    final_url = (
+        replace(final_url, [(el, '') for el in optional_group_matches])
+        if optional_group_matches else final_url
+    )
+
+    # Remvoves optional characters from the URL pattern.
+    optional_char_matches = url_optional_char_re.findall(final_url)
+    final_url = (
+        replace(final_url, [(el, '') for el in optional_char_matches])
+        if optional_char_matches else final_url
+    )
 
     # Identifies named URL arguments inside the URL pattern.
-    kwarg_matches = url_kwarg_re.findall(full_url)
-    full_url = (
-        replace(full_url, [(el[0], '<{}>'.format(el[1])) for el in kwarg_matches])
-        if kwarg_matches else full_url
+    kwarg_matches = url_kwarg_re.findall(final_url)
+    final_url = (
+        replace(final_url, [(el[0], '<{}>'.format(el[1])) for el in kwarg_matches])
+        if kwarg_matches else final_url
     )
 
     # Identifies unnamed URL arguments inside the URL pattern.
-    args_matches = url_arg_re.findall(full_url)
-    full_url = replace(full_url, [(el, '<>') for el in args_matches]) if args_matches else full_url
+    args_matches = url_arg_re.findall(final_url)
+    final_url = (
+        replace(final_url, [(el, '<>') for el in args_matches]) if args_matches else final_url
+    )
 
-    return full_url
+    # Identifies path expression and associated converters inside the URL pattern.
+    path_matches = url_path_re.findall(final_url)
+    final_url = (
+        replace(final_url, [(el, el.split(':')[-1]) for el in path_matches])
+        if (path_matches and not (kwarg_matches or args_matches)) else final_url
+    )
+
+    return final_url

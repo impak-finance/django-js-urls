@@ -9,7 +9,7 @@
 import django
 
 
-if django.VERSION < (2, 0):
+if django.VERSION < (2, 0):  # pragma: no cover
     from django.urls.resolvers import RegexURLPattern, RegexURLResolver
     RegexPattern = type('RegexPattern')
     RoutePattern = type('RoutePattern')
