@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^dummy/(?P<pk1>\w+)/foo/(?P<pk2>\d+)/bar/$', views.dummy, name='dummy_with_kwargs'),
     url(r'^dummy/(\d+)/fooo?/baa?r/$', views.dummy, name='dummy_with_optional_character'),
     url(r'^dummy/(\d+)/foo(?:bar)?/$', views.dummy, name='dummy_with_optional_group'),
-    url(r'^dummy/(\d+)/(?:/(?P<op>[a-zA-Z]+)/)?/$', views.dummy, name='dummy_with_optional_kwarg'),
+    url(r'^dummy/(\d+)/(?:/(?P<op>[a-zA-Z]+)/)?$', views.dummy, name='dummy_with_optional_kwarg'),
     url(r'^included/(?P<pk1>\w+)/', include(included_urlpatterns)),
 ]
 
