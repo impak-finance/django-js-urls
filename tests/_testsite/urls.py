@@ -1,6 +1,7 @@
 import django
 from django.conf.urls import include, url
 from django.contrib import admin
+from js_urls.views import JsUrlsView
 
 from . import views
 
@@ -18,6 +19,7 @@ urlpatterns = [
     url(r'^dummy/(\d+)/foo(?:bar)?/$', views.dummy, name='dummy_with_optional_group'),
     url(r'^dummy/(\d+)/(?:/(?P<op>[a-zA-Z]+)/)?$', views.dummy, name='dummy_with_optional_kwarg'),
     url(r'^included/(?P<pk1>\w+)/', include(included_urlpatterns)),
+    url(r'^js-urls/$', JsUrlsView.as_view(), name='js_urls'),
 ]
 
 if django.VERSION >= (2, 0):
