@@ -11,9 +11,6 @@ init:
 # locales, build documentation, etc.
 # --------------------------------------------------------------------------------------------------
 
-docs:
-	cd docs && rm -rf _build && pipenv run make html
-
 shell:
 	pipenv run ipython
 
