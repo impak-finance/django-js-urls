@@ -14,9 +14,9 @@ window.reverse = (function () {
       return url;
     }
 
-    if (typeof (arguments[1]) == 'object' && !Array.isArray(arguments[1])) {
-      const tokens = urlPattern.match(argRegex);
+    const tokens = urlPattern.match(argRegex);
 
+    if (typeof (arguments[1]) == 'object' && !Array.isArray(arguments[1])) {
       if (tokens) {
         for (let i=0; i < tokens.length; i += 1) {
           const token = tokens[i];
@@ -30,16 +30,16 @@ window.reverse = (function () {
         }
       }
     } else {
-      const tokens = urlPattern.match(argRegex);
-
+      const argsArray = Array.isArray(arguments[1]) ? arguments[1] :
+        Array.prototype.slice.apply(arguments, [1, arguments.length]);
       if (tokens) {
-        if (tokens.length !== arguments[1].length) {
+        if (tokens.length !== argsArray.length) {
           throw "Wrong number of argument";
         }
 
         for (let i=0; i < tokens.length; i += 1) {
           const token = tokens[i];
-          const argValue = arguments[1][i];
+          const argValue = argsArray[i];
           url = url.replace(token, argValue);
         }
       }
