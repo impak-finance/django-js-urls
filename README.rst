@@ -17,7 +17,7 @@ Python 3.4+, Django 1.11+.
 Installation
 ============
 
-To install Django-oidc-rp, please use pip_ (or pipenv_) as follows:
+To install Django-js-urls, please use pip_ (or pipenv_) as follows:
 
 .. code-block:: shell
 
