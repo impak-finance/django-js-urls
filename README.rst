@@ -1,6 +1,14 @@
 django-js-urls
 ##############
 
+.. image:: https://travis-ci.org/impak-finance/django-js-urls.svg?branch=master
+    :target: https://travis-ci.org/impak-finance/django-js-urls
+
+.. image:: https://codecov.io/gh/impak-finance/django-js-urls/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/impak-finance/django-js-urls
+
+|
+
 **Django-js-url** is a lightweight Django application allowing to easily get absolute path
 references matching given URL names and optional parameters on the client side - just like
 `reverse <https://docs.djangoproject.com/en/dev/ref/urlresolvers/#reverse>`_ does, but in a
