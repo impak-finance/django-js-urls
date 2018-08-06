@@ -44,10 +44,8 @@ generated Javascript file. For example:
         'blog:article_create',
     )
 
-.. note::
-
-    **Only** URLs defined in this setting will be included in the generated Javascript file. You
-    don't want to expose *all* your URLs in a Javascript file.
+**Important:** only URLs defined in this setting will be included in the generated Javascript file.
+You don't want to expose *all* the URLs of your Django project in a Javascript file.
 
 Then you can include the view responsible for generating the Javascript file in your URLs root
 module:
@@ -70,16 +68,16 @@ And finally you can include the Javascript script in your base template as follo
 Usage
 =====
 
-URLs included in the generated Javascript file can be used by your scripts by using the
+URLs included in the generated Javascript file can be used in your scripts by using the
 ``window.reverse`` function. Here are some example:
 
 .. code-block:: javascript
 
     const url1 = window.reverse('home');
     const url2 = window.reverse('blog:article_list');
-    const url3 = window.reverse('blog:article_detail', 123);
-    const url3 = window.reverse('blog:article_detail', [123, ]);
-    const url3 = window.reverse('blog:article_detail', { pk: 123 });
+    const url3 = window.reverse('blog:article_detail', articleId);
+    const url4 = window.reverse('blog:article_detail', [articleId, ]);
+    const url5 = window.reverse('blog:article_detail', { pk: articleId });
 
 Authors
 =======
