@@ -41,7 +41,8 @@ generated Javascript file. For example:
 
     JS_URLS = (
         'admin',
-        'blog:article_create',
+        'blog:article_list',
+        'blog:article_detail',
     )
 
 **Important:** only URLs defined in this setting will be included in the generated Javascript file.
