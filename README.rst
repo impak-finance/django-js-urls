@@ -1,6 +1,17 @@
 django-js-urls
 ##############
 
+.. image:: https://img.shields.io/pypi/l/django-js-urls.svg
+    :target: https://pypi.python.org/pypi/django-js-urls/
+    :alt: License
+
+.. image:: https://img.shields.io/pypi/pyversions/django-js-urls.svg
+    :target: https://pypi.python.org/pypi/django-js-urls
+
+.. image:: https://img.shields.io/pypi/v/django-js-urls.svg
+    :target: https://pypi.python.org/pypi/django-js-urls/
+    :alt: Latest Version
+
 .. image:: https://travis-ci.org/impak-finance/django-js-urls.svg?branch=master
     :target: https://travis-ci.org/impak-finance/django-js-urls
 
