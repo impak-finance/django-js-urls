@@ -20,7 +20,7 @@ django-js-urls
 
 |
 
-**Django-js-url** is a lightweight Django application allowing to easily get absolute path
+**Django-js-urls** is a lightweight Django application allowing to easily get absolute path
 references matching given URL names and optional parameters on the client side - just like
 `reverse <https://docs.djangoproject.com/en/dev/ref/urlresolvers/#reverse>`_ does, but in a
 Javascript fashion.
