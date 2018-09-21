@@ -4,7 +4,7 @@ window.reverse = (function () {
 
   return function(name) {
     const urlPattern = urls[name];
-    let url = urlPattern;
+    var url = urlPattern;
 
     if (!urlPattern) {
       throw "URL '" + name + "' not found";
@@ -18,7 +18,7 @@ window.reverse = (function () {
 
     if (typeof (arguments[1]) == 'object' && !Array.isArray(arguments[1])) {
       if (tokens) {
-        for (let i=0; i < tokens.length; i += 1) {
+        for (var i=0; i < tokens.length; i += 1) {
           const token = tokens[i];
           const argName = token.slice(1, -1);
           const argValue = arguments[1][argName];
@@ -37,7 +37,7 @@ window.reverse = (function () {
           throw "Wrong number of argument";
         }
 
-        for (let i=0; i < tokens.length; i += 1) {
+        for (var i=0; i < tokens.length; i += 1) {
           const token = tokens[i];
           const argValue = argsArray[i];
           url = url.replace(token, argValue);
