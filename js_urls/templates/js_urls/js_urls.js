@@ -1,4 +1,4 @@
-window.reverse = (function () {
+window.{{ function_name }} = (function () {
   const urls = {{ urls|safe }};
   const argRegex = /<\w*>/g;
 

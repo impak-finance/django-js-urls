@@ -99,6 +99,25 @@ URLs included in the generated Javascript file can be used in your scripts by us
     const url4 = window.reverse('blog:article_detail', [articleId, ]);
     const url5 = window.reverse('blog:article_detail', { pk: articleId });
 
+Settings
+========
+
+JS_URLS
+-------
+
+Default: ``[]``
+
+The ``JS_URLS`` setting allows to define URL namespaces or specific URL names that should be
+included in the generated Javascript file.
+
+JS_URLS_FUNCTION_NAME
+---------------------
+
+Default: ``'reverse'``
+
+The ``JS_URLS_FUNCTION_NAME`` setting allows customize the name of the function used to reverse
+URLs on the client side. This function is made available through the ``window`` global object.
+
 Authors
 =======
 

@@ -14,3 +14,7 @@ from django.conf import settings
 # namespaces. URL paths associated with configured URL names will be serialized. If namespaces are
 # used in the context of this setting, all the underlying URL paths will be serialized.
 URLS = getattr(settings, 'JS_URLS', [])
+
+# The "JS_URLS_FUNCTION_NAME" setting allows to specify the name of the object that is made
+# available through the window global object.
+FUNCTION_NAME = getattr(settings, 'JS_URLS_FUNCTION_NAME', 'reverse')
